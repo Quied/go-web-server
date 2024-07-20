@@ -8,6 +8,7 @@ import (
 
 func main() {
  http.HandleFunc("/", handler)
+ fmt.Println("> :8080");
  log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
