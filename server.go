@@ -1,18 +1,29 @@
 package main
 
 import (
- "fmt"
- "log"
- "net/http"
+	"fmt"
+	"github.com/gin-gonic/gin"
+	// "log"
+	"net/http"
 )
 
-func main() {
-	
- http.HandleFunc("/", handler)
- fmt.Println("> :8080");
- log.Fatal(http.ListenAndServe(":8080", nil))
-}
 
-func handler(w http.ResponseWriter, r *http.Request) {
- fmt.Fprint(w, "Hello, World!")
-}
+type Body struct {
+	// json tag to de-serialize json body
+	 Name string `json:"name"`
+  }
+  
+  func main() {
+	 engine:=gin.New()
+	 engine.POST("/test", func(context *gin.Context) {
+		body:=Body{}
+		// using BindJson method to serialize body with struct
+		if err:=context.BindJSON(&body);err!=nil{
+		   context.AbortWithError(http.StatusBadRequest,err)
+		   return
+		}
+		fmt.Println(body)
+		context.JSON(http.StatusAccepted,&body)
+	 })
+	 engine.Run(":3000")
+  }

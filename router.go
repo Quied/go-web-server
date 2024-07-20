@@ -1,5 +1,3 @@
-package router;
+package router
 
-var router = []route {
-	
-}
+var router = []route{}
